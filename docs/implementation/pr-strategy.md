@@ -1,4 +1,4 @@
-# Pull Request Strategy - System logowania
+# Pull Request Strategy - System logowania (Wersja 2)
 
 ## 1. Branching Strategy
 

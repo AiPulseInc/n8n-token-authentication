@@ -1,524 +1,461 @@
-# Sprint Breakdown - System logowania
+# Plan implementacji - System logowania
 
-## Overview
+## 1. Harmonogram sprintów
 
-Projekt zostanie zrealizowany w 4 sprintach po 2 tygodnie każdy, z progresywnym zwiększaniem złożoności i jakości. Każdy sprint kończy się działającą, testowaną funkcjonalnością gotową do demonstracji.
+### Sprint 1 (2 tygodnie) - Core Authentication
 
----
+**Cele**: Podstawowa funkcjonalność logowania i rejestracji
+**Daty**: Tydzień 1-2
+**Team size**: 2 developerów
 
-## Sprint 1: Core Authentication (Tygodnie 1-2)
+#### Week 1: Foundation & Login
 
-**Motto**: "Podstawy działają"
-**Cel**: MVP systemu autentyfikacji
-**Team velocity**: 60 story points
+**Zadania**:
 
-Super! Cieszę się, że mogłem pomóc.
+- **US-001**: Logowanie zarejestrowanego użytkownika (8h)
+- **US-002**: Obsługa błędów - użytkownik nieznaleziony (4h)
+- **US-003**: Obsługa błędów - nieprawidłowe hasło (4h)
+- **Setup**: Struktura projektu, routing, API integration (16h)
 
-Oto tekst o **Team Velocity** w formacie **Markdown**, gotowy do zapisania:
+**Deliverables**:
 
----
+- Działający formularz logowania
+- Integracja z n8n webhook
+- Podstawowa obsługa błędów
+- Responsive layout
 
-### Team Velocity: 60 Story Points – Wyjaśnienie
+#### Week 2: Registration
 
-Gdy mówimy o **"Team Velocity: 60 story points"**, odnosimy się do kluczowej metryki używanej w metodykach zwinnych, takich jak **Scrum**. Oznacza ona, ile pracy zespół deweloperski jest w stanie ukończyć w jednym **sprincie** (czyli iteracji, zazwyczaj trwającej od jednego do czterech tygodni).
+**Zadania**:
 
-Rozłóżmy to na czynniki pierwsze:
+- **US-007**: Inicjowanie rejestracji nowego konta (12h)
+- **US-008**: Weryfikacja adresu email przy rejestracji (8h)
+- **US-009**: Obsługa błędów rejestracji (6h)
+- **Testing**: E2E testy dla happy path scenarios (14h)
 
-* **Story Points (Punkty Historyjek)**: To jednostka miary używana do oszacowania **rozmiaru, złożoności i ryzyka** poszczególnych zadań (tzw. "historyjek użytkownika" lub "user stories"). Nie jest to miara czasu (jak godziny), ale raczej abstrakcyjna miara wysiłku potrzebnego do wykonania danego elementu pracy. Zazwyczaj zespoły używają ciągu Fibonacciego (np. 1, 2, 3, 5, 8, 13) do przypisywania punktów, aby podkreślić, że szacunki są przybliżone. Im wyższa liczba punktów, tym większe, bardziej złożone lub ryzykowne zadanie.
+**Deliverables**:
 
-* **Team Velocity (Prędkość Zespołu)**: To suma punktów historyjek ukończonych przez zespół w jednym sprincie. W Twoim przypadku **"60 story points"** oznacza, że zespół był w stanie dostarczyć funkcjonalność odpowiadającą łącznie 60 punktom historyjek w ostatnim (lub w uśrednionym) sprincie.
-
----
-
-#### Do czego służy Velocity?
-
-1.  **Przewidywanie i Planowanie**: Velocity jest używane głównie do **przewidywania, ile pracy zespół może podjąć w przyszłych sprintach**. Jeśli zespół konsekwentnie osiąga 60 punktów, Product Owner (Właściciel Produktu) może planować przyszłe sprinty, wiedząc, że zespół prawdopodobnie będzie w stanie zrealizować około 60 punktów pracy.
-2.  **Monitorowanie Postępów**: Pomaga zespołowi i interesariuszom śledzić, czy zdolność zespołu do dostarczania pracy jest stabilna, rośnie, czy maleje.
-3.  **Wspomaganie Decyzji**: Pozwala zespołowi na realistyczne określenie zakresu pracy w każdym sprincie, unikając przeciążenia lub niedociążenia.
-
----
-
-#### Ważne uwagi dotyczące Velocity:
-
-* **Stabilność jest kluczowa**: Bardziej wartościowa jest stabilna velocity (np. zawsze około 60) niż gwałtowne wahania (np. 30, potem 90, potem 50). Stabilność świadczy o dojrzałości i przewidywalności zespołu.
-* **Nie jest miarą wydajności indywidualnej**: Velocity mierzy zdolność **całego zespołu** do dostarczania, a nie indywidualną wydajność poszczególnych członków. Porównywanie velocity między różnymi zespołami jest również mylące, ponieważ sposób przypisywania punktów może się różnić.
-* **Jest narzędziem dla zespołu**: To przede wszystkim narzędzie dla zespołu, aby lepiej się organizować i planować.
+- Kompletny proces rejestracji
+- Weryfikacja email
+- Automated testing suite
+- **Milestone**: MVP authentication system
 
 ---
 
-Podsumowując, **"Team velocity: 60 story points"** to informacja o tym, że dany zespół jest w stanie ukończyć w jednym sprincie pracę o łącznej złożoności 60 punktów historyjek. Jest to cenna metryka do planowania i monitorowania w metodykach zwinnych.
+### Sprint 2 (2 tygodnie) - Password Management & Session
 
-### Sprint Planning
+**Cele**: Resetowanie haseł i zarządzanie sesją
+**Daty**: Tydzień 3-4
+**Team size**: 2 developerów
 
-#### Sprint Goals
+#### Week 3: Password Reset
 
-1. ✅ Użytkownik może się zalogować używając istniejącego konta
-2. ✅ Użytkownik może zarejestrować nowe konto z weryfikacją email
-3. ✅ System obsługuje podstawowe błędy logowania i rejestracji
-4. ✅ Responsive design działa na desktop i mobile
+**Zadania**:
 
-#### User Stories (Prioritet)
+- **US-005**: Inicjowanie resetowania hasła (10h)
+- **US-006**: Aktywacja nowego hasła (8h)
+- **US-011**: Wylogowanie użytkownika (4h)
+- **US-013**: Wyświetlanie danych zalogowanego użytkownika (6h)
 
-| Story  | Tytuł                                     | Story Points | Priorytet   | Zespół      |
-| ------ | ----------------------------------------- | ------------ | ----------- | ----------- |
-| US-001 | Logowanie zarejestrowanego użytkownika    | 8            | P0-Critical | Dev1 + Dev2 |
-| US-002 | Błąd logowania - użytkownik nieznaleziony | 3            | P0-Critical | Dev1        |
-| US-003 | Błąd logowania - nieprawidłowe hasło      | 3            | P0-Critical | Dev1        |
-| US-007 | Inicjowanie rejestracji nowego konta      | 13           | P0-Critical | Dev2        |
-| US-008 | Weryfikacja adresu email przy rejestracji | 8            | P0-Critical | Dev2        |
-| US-009 | Obsługa błędów rejestracji                | 5            | P1-High     | Dev1        |
+**Deliverables**:
 
-#### Technical Tasks
+- Pop-up resetowania hasła
+- Email verification flow
+- User info display
+- Logout functionality
 
-```
-Setup & Infrastructure (16 SP):
-├── Project scaffolding i build configuration (4 SP)
-├── CI/CD pipeline setup (4 SP)
-├── Testing framework configuration (3 SP)
-├── Code quality tools (ESLint, Prettier) (2 SP)
-├── Basic HTML/CSS responsive layout (3 SP)
+#### Week 4: Session Management
 
-API Integration (12 SP):
-├── n8n webhook integration service (6 SP)
-├── Error handling framework (3 SP)
-├── Form validation utilities (3 SP)
+**Zadania**:
 
-UI Components (12 SP):
-├── Login form component (5 SP)
-├── Registration form component (7 SP)
+- **US-010**: Automatyczne wylogowanie (12h)
+- **US-012**: Zarządzanie tokenem w wielu oknach (8h)
+- **US-004**: Obsługa błędów technicznych (6h)
+- **Refactoring**: Code review, optymalizacja (14h)
 
-Testing (20 SP):
-├── Unit tests for validation logic (6 SP)
-├── Integration tests for API calls (8 SP)
-├── E2E tests for happy paths (6 SP)
-```
+**Deliverables**:
 
-### Daily Standups Focus
-
-- **Week 1**: Infrastructure setup, login implementation
-- **Week 2**: Registration flow, testing, bug fixes
-
-### Definition of Done - Sprint 1
-
-- [ ] User can successfully log in with valid credentials
-- [ ] User can register new account and verify email
-- [ ] All error scenarios display appropriate messages
-- [ ] Forms work correctly on mobile devices
-- [ ] Unit test coverage > 80%
-- [ ] E2E tests cover main user journeys
-- [ ] Code review completed for all features
-- [ ] Security basic assessment passed
-
-### Sprint Demo
-
-```
-Demo Scenarios:
-1. Successful login flow (existing user)
-2. Registration flow with email verification
-3. Error handling demonstration
-4. Mobile responsiveness showcase
-5. Performance and accessibility basics
-
-Demo Audience:
-- Product Owner
-- Stakeholders
-- QA team
-```
+- Session timeout mechanism
+- Multi-tab token sync
+- Comprehensive error handling
+- **Milestone**: Complete auth system
 
 ---
 
-## Sprint 2: Password Management & Session (Tygodnie 3-4)
+### Sprint 3 (2 tygodnie) - Security & UX Enhancements
 
-**Motto**: "Bezpieczne zarządzanie dostępem"
-**Cel**: Kompletny system zarządzania sesjami i haseł
-**Team velocity**: 54 story points
+**Cele**: Bezpieczeństwo i podstawowe UX improvements
+**Daty**: Tydzień 5-6
+**Team size**: 2 developerów + 1 security reviewer
 
-### Sprint Planning
+#### Week 5: Security Features
 
-#### Sprint Goals
+**Zadania**:
 
-1. ✅ Użytkownik może zresetować hasło poprzez email
-2. ✅ Sesje są automatycznie zarządzane i bezpiecznie wygasają
-3. ✅ Użytkownik może się wylogować i widzieć swoje dane
-4. ✅ System obsługuje wielokrotne karty/okna przeglądarki
+- **US-014**: Rate limiting dla bezpieczeństwa (16h)
+- **US-015**: Obsługa stanów ładowania (8h)
+- **US-016**: Recovery po błędach sieci (12h)
+- **Security audit**: Penetration testing, code review (4h)
 
-#### User Stories (Prioritet)
+**Deliverables**:
 
-| Story  | Tytuł                                        | Story Points | Priorytet   | Zespół |
-| ------ | -------------------------------------------- | ------------ | ----------- | ------ |
-| US-005 | Inicjowanie resetowania hasła                | 8            | P0-Critical | Dev1   |
-| US-006 | Aktywacja nowego hasła                       | 5            | P0-Critical | Dev1   |
-| US-013 | Wyświetlanie danych zalogowanego użytkownika | 5            | P0-Critical | Dev2   |
-| US-011 | Wylogowanie użytkownika                      | 3            | P0-Critical | Dev2   |
-| US-010 | Automatyczne wylogowanie                     | 13           | P1-High     | Dev1   |
-| US-012 | Zarządzanie tokenem w wielu oknach           | 8            | P1-High     | Dev2   |
-| US-004 | Obsługa błędów technicznych                  | 5            | P1-High     | Dev1   |
+- Rate limiting implementation
+- Loading states for all forms
+- Network error recovery
+- Security assessment report
 
-#### Technical Tasks
+#### Week 6: Advanced Features
+
+**Zadania**:
+
+- **US-018**: Token refresh mechanism (14h)
+- **Performance optimization**: Bundle size, loading times (8h)
+- **Cross-browser testing**: Safari, Firefox, Chrome, Edge (8h)
+- **Mobile testing**: iOS Safari, Android Chrome (10h)
+
+**Deliverables**:
+
+- Silent token refresh
+- Optimized performance
+- Cross-browser compatibility
+- **Milestone**: Production-ready security
+
+---
+
+### Sprint 4 (2 tygodnie) - Accessibility & Quality
+
+**Cele**: Dostępność i zaawansowane funkcje
+**Daty**: Tydzień 7-8
+**Team size**: 2 developerów + 1 accessibility expert
+
+#### Week 7: Accessibility & Validation
+
+**Zadania**:
+
+- **US-017**: Accessibility compliance (16h)
+- **US-019**: Enhanced email validation (10h)
+- **UI/UX polish**: Animations, micro-interactions (8h)
+- **Accessibility audit**: Screen reader testing (6h)
+
+**Deliverables**:
+
+- WCAG 2.1 AA compliance
+- Advanced email validation
+- Polished user interface
+- Accessibility test report
+
+#### Week 8: Analytics & Final Testing
+
+**Zadania**:
+
+- **US-020**: Analytics i monitoring (12h)
+- **Final testing**: Load testing, stress testing (10h)
+- **Documentation**: User guides, admin documentation (8h)
+- **Deployment preparation**: Production configuration (10h)
+
+**Deliverables**:
+
+- Analytics dashboard
+- Load test results
+- Complete documentation
+- **Milestone**: Production deployment ready
+
+---
+
+## 2. Resource Allocation
+
+### 2.1 Team Structure
 
 ```
-Password Reset Flow (13 SP):
-├── Password reset modal component (5 SP)
-├── Email verification integration (4 SP)
-├── New password validation (2 SP)
-├── Success/error state handling (2 SP)
-
-Session Management (18 SP):
-├── Session timeout mechanism (8 SP)
-├── Activity tracking system (4 SP)
-├── Multi-tab synchronization (6 SP)
-
-User Interface (10 SP):
-├── User info display component (4 SP)
-├── Session warning notifications (3 SP)
-├── Logout button integration (3 SP)
-
-Error Handling (8 SP):
-├── Network error detection (4 SP)
-├── Retry mechanism implementation (4 SP)
-
-Refactoring & Optimization (5 SP):
-├── Code review fixes (2 SP)
-├── Performance optimizations (3 SP)
+Project Team (4-5 osób)
+├── Tech Lead (1) - Architecture, code review, technical decisions
+├── Frontend Developers (2) - Implementation, testing
+├── Security Expert (0.5) - Security review, penetration testing
+├── Accessibility Expert (0.5) - A11y compliance, testing
+└── QA Engineer (0.5) - Manual testing, test automation
 ```
 
-### Sprint Retrospective Topics
+### 2.2 Effort Distribution
 
-- API integration challenges from Sprint 1
-- Testing strategy effectiveness
-- Code quality improvements needed
-- Team collaboration patterns
+| Sprint    | Development | Testing | Review  | Documentation | Total    |
+| --------- | ----------- | ------- | ------- | ------------- | -------- |
+| Sprint 1  | 32h         | 14h     | 8h      | 6h            | 60h      |
+| Sprint 2  | 28h         | 10h     | 8h      | 8h            | 54h      |
+| Sprint 3  | 38h         | 12h     | 10h     | 6h            | 66h      |
+| Sprint 4  | 36h         | 16h     | 8h      | 10h           | 70h      |
+| **Total** | **134h**    | **52h** | **34h** | **30h**       | **250h** |
 
-### Definition of Done - Sprint 2
-
-- [ ] Password reset flow works end-to-end
-- [ ] Session management is secure and reliable
-- [ ] Multi-tab functionality works correctly
-- [ ] All technical errors are handled gracefully
-- [ ] Performance requirements met (< 3s response)
-- [ ] Security review completed
-- [ ] Documentation updated
-- [ ] Integration tests cover all scenarios
-
-### Sprint Review Metrics
+### 2.3 Budget Estimation
 
 ```
-Success Metrics:
-- Password reset completion rate > 90%
-- Session timeout accuracy ±10 seconds
-- Multi-tab sync latency < 500ms
-- Error recovery success rate > 95%
-- User satisfaction score > 4.0/5
+Assuming €50/hour average rate:
+- Development: 134h × €50 = €6,700
+- Testing: 52h × €50 = €2,600
+- Code Review: 34h × €50 = €1,700
+- Documentation: 30h × €50 = €1,500
+- External services (n8n, hosting): €200/month
+- Total Project Cost: €12,500 + €800 (4 months hosting)
 ```
 
 ---
 
-## Sprint 3: Security & UX Enhancements (Tygodnie 5-6)
+## 3. Risk Management
 
-**Motto**: "Bezpieczeństwo i doświadczenie użytkownika"
-**Cel**: Production-ready bezpieczeństwo i UX
-**Team velocity**: 66 story points
+### 3.1 Identified Risks
 
-### Sprint Planning
+#### High Priority Risks
 
-#### Sprint Goals
+| Risk                         | Probability | Impact | Mitigation Strategy                     |
+| ---------------------------- | ----------- | ------ | --------------------------------------- |
+| n8n webhook unavailability   | Medium      | High   | Implement retry logic, backup endpoints |
+| Browser compatibility issues | Low         | Medium | Extensive testing, polyfills            |
+| Security vulnerabilities     | Low         | High   | Security review, penetration testing    |
+| Performance issues           | Medium      | Medium | Performance testing, optimization       |
 
-1. ✅ System jest zabezpieczony przed atakami brute-force
-2. ✅ Wszystkie stany ładowania są intuitive dla użytkownika
-3. ✅ System radzi sobie z problemami sieciowymi
-4. ✅ Sesje są inteligentnie odświeżane
+#### Medium Priority Risks
 
-#### User Stories (Prioritet)
+| Risk                     | Probability | Impact | Mitigation Strategy               |
+| ------------------------ | ----------- | ------ | --------------------------------- |
+| Third-party API changes  | Low         | Medium | Version pinning, monitoring       |
+| Mobile browser issues    | Medium      | Low    | Device testing, responsive design |
+| Accessibility compliance | Medium      | Medium | Expert review, automated testing  |
 
-| Story  | Tytuł                            | Story Points | Priorytet   | Zespół          |
-| ------ | -------------------------------- | ------------ | ----------- | --------------- |
-| US-014 | Rate limiting dla bezpieczeństwa | 21           | P0-Critical | Dev1 + Security |
-| US-015 | Obsługa stanów ładowania         | 8            | P0-Critical | Dev2            |
-| US-016 | Recovery po błędach sieci        | 13           | P1-High     | Dev1            |
-| US-018 | Token refresh mechanism          | 13           | P1-High     | Dev2            |
+### 3.2 Contingency Plans
 
-#### Technical Tasks
-
-```
-Security Implementation (24 SP):
-├── Rate limiting logic (IP + email tracking) (10 SP)
-├── Security headers implementation (3 SP)
-├── Input sanitization enhancements (4 SP)
-├── Penetration testing fixes (4 SP)
-├── Security audit documentation (3 SP)
-
-UX Enhancements (20 SP):
-├── Loading spinners and indicators (6 SP)
-├── Progress bars for multi-step processes (4 SP)
-├── Timeout handling with user feedback (5 SP)
-├── Graceful fallback mechanisms (5 SP)
-
-Network Resilience (15 SP):
-├── Offline detection and handling (5 SP)
-├── Request queuing system (6 SP)
-├── Data persistence during outages (4 SP)
-
-Advanced Session Management (7 SP):
-├── Silent token refresh implementation (5 SP)
-├── Cross-tab refresh synchronization (2 SP)
-```
-
-### Security Review Process
+#### Technical Risks
 
 ```
-Security Checklist:
-├── OWASP Top 10 validation ✓
-├── Rate limiting effectiveness testing ✓
-├── Session security audit ✓
-├── Input validation comprehensive review ✓
-├── XSS and CSRF protection verification ✓
-├── Data encryption in transit validation ✓
-└── Penetration testing report ✓
+Scenario: n8n webhook failure
+- Immediate: Display maintenance message
+- Short-term: Implement request queuing
+- Long-term: Backup authentication service
 
-External Security Audit:
-- Third-party security assessment
-- Vulnerability scanning
-- Compliance verification
+Scenario: Performance degradation
+- Monitor Core Web Vitals
+- Implement performance budget alerts
+- Emergency optimization protocol
 ```
 
-### Performance Testing
+#### Timeline Risks
 
 ```
-Load Testing Scenarios:
-1. Normal load: 100 concurrent users
-2. Peak load: 500 concurrent users
-3. Stress test: 1000 concurrent users
-4. Rate limiting validation: Burst traffic simulation
+Scenario: Sprint delay
+- Prioritize core features (US-001, US-007)
+- Move advanced features to future releases
+- Parallel development where possible
 
-Performance Benchmarks:
-- API response time < 3 seconds (95th percentile)
-- Page load time < 2 seconds
-- JavaScript execution time < 100ms
-- Bundle size < 500KB compressed
+Scenario: Team member unavailability
+- Cross-training on critical components
+- Documentation of all major decisions
+- Pair programming for knowledge sharing
 ```
-
-### Definition of Done - Sprint 3
-
-- [ ] Rate limiting prevents abuse effectively
-- [ ] All user interactions have appropriate loading states
-- [ ] Network interruptions are handled gracefully
-- [ ] Token refresh works silently and reliably
-- [ ] Security audit passes with no critical issues
-- [ ] Performance benchmarks are met
-- [ ] Cross-browser compatibility verified
-- [ ] Mobile experience optimized
 
 ---
 
-## Sprint 4: Accessibility & Quality (Tygodnie 7-8)
+## 4. Quality Assurance
 
-**Motto**: "Gotowe do produkcji"
-**Cel**: WCAG compliance i production deployment
-**Team velocity**: 70 story points
+### 4.1 Testing Strategy
 
-### Sprint Planning
-
-#### Sprint Goals
-
-1. ✅ System spełnia standardy WCAG 2.1 AA
-2. ✅ Advanced email validation poprawia jakość danych
-3. ✅ Analytics dostarczają wgląd w użytkowanie
-4. ✅ System jest gotowy do wdrożenia produkcyjnego
-
-#### User Stories (Prioritet)
-
-| Story  | Tytuł                     | Story Points | Priorytet   | Zespół             |
-| ------ | ------------------------- | ------------ | ----------- | ------------------ |
-| US-017 | Accessibility compliance  | 21           | P0-Critical | Dev2 + A11y Expert |
-| US-019 | Enhanced email validation | 13           | P1-High     | Dev1               |
-| US-020 | Analytics i monitoring    | 13           | P1-High     | Dev1               |
-
-#### Technical Tasks
+#### Automated Testing
 
 ```
-Accessibility Implementation (25 SP):
-├── ARIA labels and semantic HTML (8 SP)
-├── Keyboard navigation enhancement (6 SP)
-├── Screen reader optimization (5 SP)
-├── Color contrast improvements (3 SP)
-├── Focus management refinement (3 SP)
+Unit Tests (Jest/Vitest):
+- Form validation logic
+- Session management
+- Rate limiting logic
+- Error handling
 
-Advanced Email Validation (15 SP):
-├── Domain validation (MX records) (4 SP)
-├── Disposable email detection (3 SP)
-├── Typo detection and suggestions (4 SP)
-├── Blacklist/whitelist implementation (4 SP)
+Integration Tests:
+- API webhook integration
+- Storage mechanisms
+- Cross-browser functionality
 
-Analytics & Monitoring (15 SP):
-├── Event tracking implementation (6 SP)
-├── Performance monitoring setup (4 SP)
-├── Error tracking integration (3 SP)
-├── Dashboard configuration (2 SP)
-
-Production Preparation (15 SP):
-├── Final bug fixes and polishing (5 SP)
-├── Production environment setup (4 SP)
-├── Deployment automation (3 SP)
-├── Documentation completion (3 SP)
+E2E Tests (Playwright):
+- Complete user flows
+- Error scenarios
+- Mobile responsive testing
 ```
 
-### Accessibility Testing Protocol
+#### Manual Testing
 
 ```
-Manual Testing:
-├── Screen reader testing (NVDA, JAWS, VoiceOver)
-├── Keyboard-only navigation testing
-├── High contrast mode validation
-├── Zoom testing (up to 200%)
-├── Color blindness simulation
+Security Testing:
+- Penetration testing
+- OWASP top 10 validation
+- Session security audit
 
-Automated Testing:
-├── axe-core accessibility scanning
-├── WAVE accessibility evaluation
-├── Lighthouse accessibility audit
-├── Pa11y command-line testing
+Accessibility Testing:
+- Screen reader compatibility
+- Keyboard navigation
+- Color contrast validation
 
-Compliance Verification:
-├── WCAG 2.1 Level AA checklist
-├── Section 508 compliance
-├── EN 301 549 standards (EU)
+Usability Testing:
+- User journey validation
+- Mobile usability
+- Cross-browser experience
 ```
 
-### Analytics Implementation
+### 4.2 Performance Benchmarks
+
+#### Core Web Vitals Targets
 
 ```
-Tracked Events:
-├── Registration funnel steps
-├── Login success/failure rates
-├── Password reset completion
-├── Error occurrences and types
-├── Performance metrics (Core Web Vitals)
-├── User journey mapping
-├── Feature usage statistics
+Performance Targets:
+- First Contentful Paint: < 1.5s
+- Largest Contentful Paint: < 2.5s
+- First Input Delay: < 100ms
+- Cumulative Layout Shift: < 0.1
 
-Privacy Compliance:
-├── GDPR consent management
-├── Data anonymization
-├── Cookie policy implementation
-├── User data export capability
+Custom Metrics:
+- Login form render: < 500ms
+- API response handling: < 200ms
+- Error message display: < 100ms
 ```
 
-### Production Readiness Checklist
+### 4.3 Acceptance Criteria
 
 ```
-Infrastructure:
-├── [ ] CDN configuration optimized
-├── [ ] SSL certificates installed
-├── [ ] Security headers configured
-├── [ ] Monitoring alerts set up
-├── [ ] Backup procedures tested
+Sprint 1 Acceptance:
+✅ User can successfully log in
+✅ Registration flow works end-to-end
+✅ Error messages are clear and actionable
+✅ Responsive design works on mobile
 
-Code Quality:
-├── [ ] Code coverage > 85%
-├── [ ] No critical or high severity security issues
-├── [ ] Performance benchmarks met
-├── [ ] Cross-browser compatibility verified
-├── [ ] Mobile responsiveness confirmed
+Sprint 2 Acceptance:
+✅ Password reset flow functions
+✅ Session management works correctly
+✅ Multi-tab synchronization
+✅ Automatic logout after inactivity
 
-Documentation:
-├── [ ] User documentation complete
-├── [ ] Technical documentation updated
-├── [ ] Deployment procedures documented
-├── [ ] Troubleshooting guides prepared
-├── [ ] API documentation finalized
+Sprint 3 Acceptance:
+✅ Rate limiting prevents abuse
+✅ Network errors are handled gracefully
+✅ Security review passes
+✅ Performance benchmarks met
 
-Testing:
-├── [ ] All user stories accepted
-├── [ ] E2E test suite passes
-├── [ ] Load testing completed
-├── [ ] Security testing passed
-├── [ ] Accessibility testing verified
+Sprint 4 Acceptance:
+✅ WCAG 2.1 AA compliance achieved
+✅ Analytics tracking functional
+✅ Load testing successful
+✅ Production deployment ready
 ```
-
-### Definition of Done - Sprint 4
-
-- [ ] WCAG 2.1 AA compliance achieved and verified
-- [ ] Advanced email validation reduces spam registrations
-- [ ] Analytics provide actionable insights
-- [ ] All production requirements satisfied
-- [ ] Documentation is complete and accurate
-- [ ] Final user acceptance testing passed
-- [ ] Go-live decision made by stakeholders
 
 ---
 
-## Cross-Sprint Activities
+## 5. Deployment Strategy
 
-### Continuous Integration
-
-```
-Every Sprint:
-├── Daily standup meetings (15 min)
-├── Sprint planning session (4 hours)
-├── Sprint review/demo (2 hours)
-├── Sprint retrospective (1.5 hours)
-├── Backlog refinement (2 hours)
-
-Every Week:
-├── Code review sessions
-├── Security check-ins
-├── Performance monitoring review
-├── Technical debt assessment
-```
-
-### Risk Mitigation
+### 5.1 Environment Setup
 
 ```
-Sprint 1 Risks:
-- API integration complexity → Prototype early
-- Team velocity uncertainty → Conservative estimates
+Development Environment:
+- Local development server
+- Mock n8n webhooks for testing
+- Hot reload for rapid iteration
 
-Sprint 2 Risks:
-- Session management complexity → Security expert consultation
-- Multi-tab synchronization → Thorough testing
+Staging Environment:
+- Production-like configuration
+- Real n8n webhook integration
+- Performance monitoring enabled
 
-Sprint 3 Risks:
-- Rate limiting impact on UX → User testing
-- Performance degradation → Continuous monitoring
-
-Sprint 4 Risks:
-- Accessibility compliance gaps → Expert review
-- Production deployment issues → Staging validation
+Production Environment:
+- CDN deployment (Vercel/Netlify)
+- Real user monitoring
+- Error tracking enabled
+- Analytics integration
 ```
 
-### Quality Gates
+### 5.2 Release Plan
 
 ```
-Sprint Completion Criteria:
-├── All planned user stories completed
-├── No critical bugs in sprint scope
-├── Code coverage maintains > 80%
-├── Performance regressions < 10%
-├── Security vulnerabilities addressed
-├── Documentation updated
-├── Demo successfully presented
+Phase 1 (Post Sprint 1):
+- MVP deployment to staging
+- Internal team testing
+- Basic functionality validation
+
+Phase 2 (Post Sprint 2):
+- Feature-complete staging deployment
+- User acceptance testing
+- Performance validation
+
+Phase 3 (Post Sprint 3):
+- Security-hardened staging
+- Load testing
+- Final security review
+
+Phase 4 (Post Sprint 4):
+- Production deployment
+- Gradual rollout (if applicable)
+- Post-launch monitoring
 ```
 
-### Success Metrics
+### 5.3 Rollback Strategy
 
 ```
-Sprint 1:
-- Basic functionality works: 100%
-- Test coverage: >80%
-- Mobile compatibility: 100%
+Rollback Triggers:
+- Error rate > 5%
+- Performance degradation > 50%
+- Security vulnerability discovered
+- Critical user flow broken
 
-Sprint 2:
-- Password reset success: >90%
-- Session accuracy: ±10 seconds
-- Multi-tab sync: <500ms latency
+Rollback Process:
+1. Immediate: Switch DNS to previous version
+2. Investigate: Root cause analysis
+3. Fix: Address issues in development
+4. Re-deploy: Gradual rollout with monitoring
+```
 
-Sprint 3:
-- Rate limiting effectiveness: 100%
-- Network error recovery: >95%
-- Performance benchmarks: Met
+---
 
-Sprint 4:
-- WCAG compliance: Level AA
-- Production readiness: 100%
-- User acceptance: >4.0/5.0
+## 6. Monitoring and Maintenance
+
+### 6.1 Production Monitoring
+
+```
+Real User Monitoring (RUM):
+- Core Web Vitals tracking
+- User journey analytics
+- Error rate monitoring
+- API response time tracking
+
+Business Metrics:
+- Login success rate
+- Registration conversion
+- Password reset completion
+- User retention metrics
+```
+
+### 6.2 Maintenance Schedule
+
+```
+Daily:
+- Error rate monitoring
+- Performance metrics review
+- User feedback collection
+
+Weekly:
+- Security patches review
+- Dependency updates
+- Performance optimization
+
+Monthly:
+- Full security audit
+- Analytics review
+- Feature usage analysis
+- User satisfaction survey
+```
+
+### 6.3 Support and Documentation
+
+```
+User Documentation:
+- Login troubleshooting guide
+- Password reset instructions
+- Browser compatibility guide
+- Accessibility features guide
+
+Technical Documentation:
+- API integration guide
+- Security configuration
+- Deployment procedures
+- Troubleshooting runbook
 ```
