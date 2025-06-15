@@ -1,173 +1,140 @@
-# Wymagania techniczne - System logowania
+# Wymagania techniczne - System logowania (Wersja 2)
 
-## 1. API Specifications
+## 1. Stack technologiczny (Rozszerzony Wersja 2)
 
-### 1.1 Endpointy webhooków n8n
-
-#### Logowanie użytkownika
-
-- **URL**: `https://n8n-aipulse.up.railway.app/webhook-test/c0c755cf-deb8-4952-8f71-c88943566d72`
-- **Metoda**: POST
-- **Content-Type**: application/json
-- **Request format**:
-
-```json
-{
-  "email": "user@example.com",
-  "password": "securePassword123!"
-}
-```
-
-- **Response format (success)**:
-
-```json
-{
-  "status": "success",
-  "data": {
-    "name": "Jan Kowalski",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "credits": 150
-  }
-}
-```
-
-- **Response format (error)**:
-
-```json
-{
-  "status": "error",
-  "error": "user_not_found | invalid_password",
-  "message": "Nie znaleziono użytkownika"
-}
-```
-
-#### Inicjowanie resetowania hasła
-
-- **URL**: `https://n8n-aipulse.up.railway.app/webhook-test/014d8471-1c76-46c9-b15f-1009a131ce4f`
-- **Metoda**: POST
-- **Content-Type**: application/json
-- **Request format**:
-
-```json
-{
-  "email": "user@example.com",
-  "newPassword": "newSecurePassword123!"
-}
-```
-
-- **Response format**:
-
-```json
-{
-  "status": "success | error",
-  "message": "Link weryfikacyjny został wysłany | Nie znaleziono konta"
-}
-```
-
-#### Aktywacja nowego hasła
-
-- **URL**: `https://n8n-aipulse.up.railway.app/webhook-test/5ca54e07-d8d5-45d6-bafe-642b209f234a`
-- **Metoda**: POST
-- **Content-Type**: application/json
-- **Request format**: Parametry przekazywane przez link w emailu
-- **Response format**:
-
-```json
-{
-  "status": "success | error",
-  "message": "Hasło zostało zmienione | Link wygasł"
-}
-```
-
-#### Rejestracja nowego użytkownika
-
-- **URL**: `https://n8n-aipulse.up.railway.app/webhook-test/cc9d3a99-22b4-4cf3-97ee-33af0405451d`
-- **Metoda**: POST
-- **Content-Type**: application/json
-- **Request format**:
-
-```json
-{
-  "email": "user@example.com",
-  "password": "securePassword123!",
-  "name": "Jan Kowalski",
-  "phone": "+48123456789"
-}
-```
-
-- **Response format**:
-
-```json
-{
-  "status": "success | error",
-  "error": "email_exists",
-  "message": "Konto zostało utworzone | Email już istnieje"
-}
-```
-
-#### Weryfikacja emaila przy rejestracji
-
-- **URL**: `https://n8n-aipulse.up.railway.app/webhook-test/66086a0b-da58-4fa5-9132-242db2618345`
-- **Metoda**: POST
-- **Content-Type**: application/json
-- **Request format**: Parametry przekazywane przez link w emailu
-- **Response format**:
-
-```json
-{
-  "status": "success | error",
-  "message": "Konto zostało aktywowane | Link wygasł"
-}
-```
-
-### 1.2 Timeout i retry logic
-
-- **Request timeout**: 30 sekund
-- **Retry attempts**: Maksymalnie 3 próby
-- **Retry delay**: Exponential backoff (1s, 2s, 4s)
-- **Error codes**:
-  - 200: Success/Business error
-  - 400-499: Client errors (no retry)
-  - 500-599: Server errors (retry enabled)
-
----
-
-## 2. Security Requirements
-
-### 2.1 Polityka haseł
-
-- **Minimalna długość**: 8 znaków
-- **Wymagane znaki**:
-  - Co najmniej jedna duża litera (A-Z)
-  - Co najmniej jedna cyfra (0-9)
-  - Co najmniej jeden znak specjalny: `!@#$%^&*()_+-=[]{}|;:,.<>?`
-- **Regex pattern**:
-
-```regex
-^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{}|;:,.<>?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{}|;:,.<>?]{8,}$
-```
-
-### 2.2 Session Management
-
-- **Storage method**: sessionStorage (client-side only)
-- **Token expiration**: 5 minut bezczynności
-- **Activity tracking**:
-  - Mouse movements
-  - Keyboard input
-  - Click events
-  - Scroll events
-- **Session warning**: 1 minuta przed wygaśnięciem
-- **Cleanup**: Automatyczne usunięcie przy zamknięciu przeglądarki
-
-### 2.3 Rate Limiting
+### 1.1 Frontend Framework
 
 ```javascript
-// Rate limiting rules
-const rateLimits = {
+// Podstawowy stack (bez zmian)
+const techStack = {
+  framework: "React 18+",
+  language: "TypeScript 5.0+",
+  bundler: "Vite 4.0+",
+  styling: "CSS Modules + Tailwind CSS",
+  testing: "Vitest + React Testing Library",
+  e2e: "Playwright",
+};
+
+// Nowe wymagania Wersja 2
+const enhancedStack = {
+  analytics: "Google Analytics 4 + Custom Events", // ⭐️ NOWE
+  monitoring: "Sentry + Performance Monitoring", // ⭐️ NOWE
+  validation: "Zod + Real-time validation", // ⭐️ NOWE
+  caching: "React Query + Service Worker", // ⭐️ NOWE
+  accessibility: "axe-core + ARIA Live Regions", // ⭐️ Rozszerzone
+};
+```
+
+### 1.2 API Integration (Rozszerzone Wersja 2)
+
+```javascript
+// Istniejące endpointy
+const existingEndpoints = {
+  LOGIN: "/webhook-test/c0c755cf-deb8-4952-8f71-c88943566d72",
+  REGISTER: "/webhook-test/cc9d3a99-22b4-4cf3-97ee-33af0405451d",
+  RESET_INIT: "/webhook-test/014d8471-1c76-46c9-b15f-1009a131ce4f",
+  RESET_ACTIVATE: "/webhook-test/5ca54e07-d8d5-45d6-bafe-642b209f234a",
+  VERIFY_EMAIL: "/webhook-test/66086a0b-da58-4fa5-9132-242db2618345",
+};
+
+// Nowe endpointy Wersja 2 ⭐️
+const newEndpoints = {
+  RESEND_ACTIVATION: "/webhook-test/resend-activation-email",
+  VERIFY_PROMO_CODE: "/webhook-test/verify-promo-code",
+  ACTIVATE_PROMO_CODE: "/webhook-test/activate-promo-code",
+  GET_PROMO_STATUS: "/webhook-test/get-promo-status",
+  ANALYTICS_TRACK: "/webhook-test/track-analytics-event",
+};
+```
+
+### 1.3 State Management (Rozszerzone Wersja 2)
+
+```typescript
+// Rozszerzony state o nowe funkcjonalności
+interface AppState {
+  // Existing state
+  user: UserState;
+  auth: AuthState;
+  session: SessionState;
+
+  // New state structures ⭐️ Wersja 2
+  promoCode: PromoCodeState;
+  accountActivation: AccountActivationState;
+  analytics: AnalyticsState;
+}
+
+interface PromoCodeState {
+  currentCode: string | null;
+  validationStatus: "idle" | "validating" | "valid" | "invalid";
+  activationHistory: PromoActivation[];
+  rateLimitStatus: RateLimitInfo;
+  errors: PromoCodeError[];
+}
+
+interface AccountActivationState {
+  isActive: boolean;
+  resendCount: number;
+  lastResendTime: Date | null;
+  rateLimitedUntil: Date | null;
+}
+```
+
+## 2. Wymagania dotyczące wydajności (Zaktualizowane Wersja 2)
+
+### 2.1 Loading Times (Rozszerzone)
+
+```javascript
+const performanceRequirements = {
+  // Existing requirements
+  initialPageLoad: "< 2 sekund",
+  formSubmission: "< 3 sekundy",
+  apiResponse: "< 500ms (95th percentile)",
+
+  // New requirements ⭐️ Wersja 2
+  promoCodeValidation: "< 300ms (realtime)",
+  promoCodeActivation: "< 1 sekunda",
+  activationEmailResend: "< 2 sekundy",
+  analyticsEventTracking: "< 100ms (non-blocking)",
+  rateLimit checking: "< 50ms (cached)"
+};
+```
+
+### 2.2 Responsiveness (Rozszerzone)
+
+```javascript
+const responsiveRequirements = {
+  // Enhanced for new features
+  userInteraction: "< 100ms feedback",
+  formValidation: "< 200ms realtime",
+  promoCodeFeedback: "< 150ms visual response", // ⭐️ NOWE
+  errorRecovery: "< 1 sekunda",
+  networkRetry: "exponential backoff starting 1s",
+};
+```
+
+### 2.3 Scalability (Nowe wymagania Wersja 2)
+
+```javascript
+const scalabilityRequirements = {
+  concurrentUsers: 1000, // bez zmian
+  promoCodeValidations: "500/minute peak", // ⭐️ NOWE
+  analyticsEvents: "10,000/minute", // ⭐️ NOWE
+  activationEmailResends: "100/minute", // ⭐️ NOWE
+  cacheHitRatio: "> 80% for promo validations", // ⭐️ NOWE
+};
+```
+
+## 3. Bezpieczeństwo (Rozszerzone Wersja 2)
+
+### 3.1 Rate Limiting (Znacznie rozszerzone)
+
+```javascript
+const rateLimitingRules = {
+  // Existing rules
   login: {
     maxAttempts: 5,
     windowMinutes: 15,
-    blockDurationMinutes: 60,
+    blockDurationMinutes: 15,
   },
   passwordReset: {
     maxAttempts: 3,
@@ -179,431 +146,825 @@ const rateLimits = {
     windowMinutes: 10,
     blockDurationMinutes: 30,
   },
+
+  // New rules ⭐️ Wersja 2
+  promoCodeVerification: {
+    maxAttempts: 10,
+    windowMinutes: 15,
+    blockDurationMinutes: 120,
+    perUserLimit: 20, // per day
+  },
+  promoCodeActivation: {
+    maxAttempts: 5,
+    windowMinutes: 60,
+    blockDurationMinutes: 120,
+    perUserLimit: 5, // per hour
+  },
+  resendActivation: {
+    maxAttempts: 3,
+    windowMinutes: 60,
+    blockDurationMinutes: 60,
+  },
+  analyticsEvents: {
+    maxEvents: 100,
+    windowMinutes: 1,
+    burstAllowance: 10,
+  },
 };
 ```
 
-### 2.4 Data Validation
+### 3.2 Input Validation (Rozszerzone Wersja 2)
 
-- **Email validation**: RFC 5322 compliant
-- **Input sanitization**: HTML encoding for display
-- **XSS prevention**: Content Security Policy headers
-- **CSRF protection**: SameSite cookies (if applicable)
+```typescript
+// Enhanced validation schemas
+const validationSchemas = {
+  // Existing schemas...
 
----
+  // New schemas ⭐️ Wersja 2
+  promoCode: {
+    format: /^[A-Z0-9]{6,12}$/,
+    sanitization: "uppercase + alphanumeric only",
+    maxLength: 12,
+    minLength: 6,
+    blacklist: ["ADMIN", "TEST", "DEBUG"],
+  },
 
-## 3. Performance Requirements
+  analyticsEvent: {
+    eventName: "string, max 50 chars",
+    properties: "object, max 10 properties",
+    timestamp: "ISO 8601 format",
+    userId: "UUID format if present",
+  },
+};
+```
 
-### 3.1 Response Times
-
-- **API calls**: Maksymalnie 3 sekundy
-- **Form validation**: Real-time (< 300ms)
-- **Page load**: < 2 sekundy (initial load)
-- **JavaScript execution**: < 100ms dla user interactions
-
-### 3.2 Client-side Performance
+### 3.3 Data Protection (Rozszerzone Wersja 2)
 
 ```javascript
-// Performance budgets
-const performanceBudgets = {
-  bundleSize: "500KB", // Compressed
-  firstContentfulPaint: "1.5s",
-  largestContentfulPaint: "2.5s",
-  firstInputDelay: "100ms",
-  cumulativeLayoutShift: "0.1",
-};
-```
+const dataProtection = {
+  // Existing protection...
 
-### 3.3 Optimization Strategies
-
-- **Code splitting**: Lazy loading dla niekrityanych komponentów
-- **Debounced validation**: 300ms delay dla real-time feedback
-- **Request caching**: sessionStorage dla form data backup
-- **Minification**: CSS i JavaScript compression
-- **Image optimization**: WebP format, lazy loading
-
----
-
-## 4. Browser Compatibility
-
-### 4.1 Supported Browsers
-
-- **Chrome**: 90+ (95% support)
-- **Firefox**: 90+ (85% support)
-- **Safari**: 14+ (80% support)
-- **Edge**: 90+ (85% support)
-- **Mobile Safari**: iOS 14+ (75% support)
-- **Chrome Mobile**: Android 90+ (85% support)
-
-### 4.2 Required APIs
-
-```javascript
-// Feature detection
-const requiredFeatures = {
-  sessionStorage: typeof Storage !== "undefined",
-  fetch: typeof fetch !== "undefined",
-  es6Modules: typeof Symbol !== "undefined",
-  customElements: typeof customElements !== "undefined",
-};
-```
-
-### 4.3 Polyfills
-
-- **fetch**: Dla starszych przeglądarek
-- **Promise**: IE11 support (jeśli wymagany)
-- **Object.assign**: Legacy browser support
-- **Array.includes**: ES2016 compatibility
-
----
-
-## 5. Data Storage Specifications
-
-### 5.1 Client-side Storage
-
-```javascript
-// sessionStorage structure
-const sessionData = {
-  authToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  userInfo: {
-    name: "Jan Kowalski",
-    credits: 150,
-    loginTime: "2025-06-15T10:30:00Z",
+  // New protection measures ⭐️ Wersja 2
+  promoCodeStorage: {
+    localStorage: false, // Never store promo codes locally
+    sessionStorage: false, // Never store promo codes in session
+    memory: 'clear on page unload',
+    transmission: 'HTTPS only with request signing'
   },
-  sessionActivity: {
-    lastActivity: "2025-06-15T10:35:00Z",
-    warningShown: false,
+
+  analyticsData: {
+    piiScrubbing: 'automatic',
+    retention: '90 days maximum',
+    anonymization: 'IP address masked',
+    consent: 'explicit opt-in required'
   },
-};
 
-// localStorage (backup only)
-const backupData = {
-  formData: {
-    email: "user@example.com",
-    timestamp: "2025-06-15T10:30:00Z",
-  },
-  rateLimitCounters: {
-    login: { count: 2, resetTime: "2025-06-15T10:45:00Z" },
-    passwordReset: { count: 1, resetTime: "2025-06-15T11:30:00Z" },
-    registration: { count: 0, resetTime: null },
-  },
-};
-```
-
-### 5.2 Data Encryption
-
-- **Token storage**: Plain text w sessionStorage (HTTPS transport)
-- **Sensitive data**: Nie przechowywane client-side
-- **Form data backup**: Tylko email (nie hasła)
-- **Rate limiting**: Encrypted counters w localStorage
-
-### 5.3 Data Retention
-
-- **Session data**: Usuwane przy zamknięciu przeglądarki
-- **Backup data**: TTL 24 godziny
-- **Rate limit data**: TTL zgodny z window period
-- **Analytics data**: Anonimizowane po 30 dniach
-
----
-
-## 6. Infrastructure Requirements
-
-### 6.1 Hosting Environment
-
-- **Frontend**: Static hosting (Vercel, Netlify, CloudFlare Pages)
-- **CDN**: Global content delivery network
-- **SSL/TLS**: Minimum TLS 1.2
-- **Domain**: HTTPS required dla production
-
-### 6.2 External Dependencies
-
-```json
-{
-  "dependencies": {
-    "core": "vanilla JavaScript ES2020+",
-    "validation": "built-in HTML5 + custom regex",
-    "http": "native fetch API",
-    "storage": "native Web Storage API"
-  },
-  "optional": {
-    "analytics": "Google Analytics | Mixpanel",
-    "monitoring": "Sentry | LogRocket",
-    "validation": "external email validation API"
+  auditLogging: {
+    promoActivations: 'full audit trail',
+    failedAttempts: 'logged with IP and timestamp',
+    rateLimit violations: 'security alert triggered'
   }
-}
-```
-
-### 6.3 Network Requirements
-
-- **Bandwidth**: Minimum 1 Mbps dla użytkownika
-- **Latency**: < 200ms do n8n endpoints
-- **Availability**: 99.5% uptime requirement
-- **Load balancing**: n8n webhook load distribution
-
----
-
-## 7. Error Handling Standards
-
-### 7.1 Error Categories
-
-```javascript
-const errorTypes = {
-  NETWORK_ERROR: "network_error",
-  VALIDATION_ERROR: "validation_error",
-  BUSINESS_ERROR: "business_error",
-  AUTHENTICATION_ERROR: "auth_error",
-  RATE_LIMIT_ERROR: "rate_limit_error",
-  TIMEOUT_ERROR: "timeout_error",
 };
 ```
 
-### 7.2 Error Response Format
+## 4. API Integration (Rozszerzone Wersja 2)
+
+### 4.1 Request/Response Format (Rozszerzony)
+
+```typescript
+// New API request formats ⭐️ Wersja 2
+
+interface PromoCodeVerifyRequest {
+  promoCode: string;
+  userId?: string; // Optional for verification
+  context: "registration" | "login";
+  timestamp: string;
+  signature: string; // HMAC for security
+}
+
+interface PromoCodeVerifyResponse {
+  valid: boolean;
+  code: string;
+  credits: number;
+  expiryDate: string;
+  alreadyUsed: boolean;
+  error?: PromoCodeError;
+}
+
+interface PromoCodeActivateRequest {
+  promoCode: string;
+  userId: string;
+  userEmail: string;
+  context: "registration" | "login";
+  timestamp: string;
+  signature: string;
+}
+
+interface PromoCodeActivateResponse {
+  success: boolean;
+  creditsAdded: number;
+  totalCredits: number;
+  activationId: string;
+  error?: PromoCodeError;
+}
+
+interface ResendActivationRequest {
+  email: string;
+  promoCode?: string; // Preserve promo code for activation
+  timestamp: string;
+  signature: string;
+}
+
+// Enhanced existing request formats
+interface LoginRequest {
+  email: string;
+  password: string;
+  promoCode?: string; // ⭐️ NOWE pole
+  timestamp: string;
+  signature: string;
+}
+
+interface RegistrationRequest {
+  email: string;
+  password: string;
+  firstName: string;
+  phone?: string;
+  promoCode?: string; // ⭐️ NOWE pole
+  timestamp: string;
+  signature: string;
+}
+```
+
+### 4.2 Error Handling (Znacznie rozszerzone Wersja 2)
+
+```typescript
+// Enhanced error types
+interface PromoCodeError {
+  type:
+    | "INVALID_CODE"
+    | "EXPIRED"
+    | "ALREADY_USED"
+    | "RATE_LIMITED"
+    | "ACTIVATION_FAILED";
+  code: string;
+  message: string;
+  details?: {
+    expiryDate?: string;
+    usageDate?: string;
+    retryAfter?: number; // seconds
+    maxAttemptsReached?: boolean;
+  };
+}
+
+interface AccountActivationError {
+  type: "EMAIL_NOT_FOUND" | "ALREADY_ACTIVE" | "RATE_LIMITED" | "SEND_FAILED";
+  message: string;
+  retryAfter?: number;
+  attemptsRemaining?: number;
+}
+
+interface AnalyticsError {
+  type: "TRACKING_FAILED" | "INVALID_EVENT" | "RATE_LIMITED";
+  event: string;
+  message: string;
+  recoverable: boolean;
+}
+```
+
+### 4.3 Timeout and Retry Logic (Rozszerzone Wersja 2)
 
 ```javascript
-// Standardized error response
-const errorResponse = {
-  success: false,
-  error: {
-    type: "VALIDATION_ERROR",
-    code: "INVALID_EMAIL",
-    message: "Podany adres email jest nieprawidłowy",
-    field: "email", // for form errors
-    retryable: false,
-    timestamp: "2025-06-15T10:30:00Z",
+const apiConfiguration = {
+  // Existing timeouts...
+
+  // New timeout configurations ⭐️ Wersja 2
+  promoCodeValidation: {
+    timeout: 5000, // 5 seconds
+    retries: 2,
+    retryDelay: 1000, // 1 second
+    circuitBreaker: true,
+  },
+
+  promoCodeActivation: {
+    timeout: 10000, // 10 seconds
+    retries: 3,
+    retryDelay: 2000, // 2 seconds
+    exponentialBackoff: true,
+  },
+
+  activationEmailResend: {
+    timeout: 15000, // 15 seconds
+    retries: 2,
+    retryDelay: 3000, // 3 seconds
+    rateLimit: true,
+  },
+
+  analyticsTracking: {
+    timeout: 3000, // 3 seconds
+    retries: 1,
+    retryDelay: 500,
+    nonBlocking: true, // Don't block UI
+    queueOnFailure: true,
   },
 };
 ```
 
-### 7.3 Error Recovery Strategies
+## 5. Client-side Storage (Rozszerzone Wersja 2)
 
-```javascript
-const recoveryStrategies = {
-  NETWORK_ERROR: "retry_with_backoff",
-  TIMEOUT_ERROR: "retry_once",
-  RATE_LIMIT_ERROR: "show_countdown_timer",
-  VALIDATION_ERROR: "highlight_field_and_focus",
-  BUSINESS_ERROR: "show_message_with_actions",
+### 5.1 Session Storage (Rozszerzone)
+
+```typescript
+interface SessionData {
+  // Existing data
+  authToken: string;
+  userInfo: UserInfo;
+  sessionExpiry: number;
+
+  // New data ⭐️ Wersja 2
+  accountActivationStatus: {
+    isActive: boolean;
+    pendingPromoCode?: string; // Stored until activation
+    resendAttempts: number;
+    lastResendTime?: number;
+  };
+
+  analyticsSession: {
+    sessionId: string;
+    startTime: number;
+    eventQueue: AnalyticsEvent[]; // Offline queue
+  };
+}
+
+// Security rules for new data
+const storageSecurityRules = {
+  promoCode: "NEVER_STORE", // ⭐️ CRITICAL
+  activationStatus: "SESSION_ONLY",
+  analyticsEvents: "TEMPORARY_QUEUE_ONLY",
+  rateLimitInfo: "MEMORY_ONLY",
 };
 ```
 
----
+### 5.2 Memory Management (Nowe Wersja 2)
 
-## 8. Responsive Design Requirements
+```javascript
+const memoryManagement = {
+  promoCodeCache: {
+    maxSize: 100, // Recent validations
+    ttl: 300000, // 5 minutes
+    encryption: true,
+  },
 
-### 8.1 Breakpoints
+  rateLimitCache: {
+    maxSize: 1000, // Rate limit states
+    ttl: 900000, // 15 minutes
+    cleanupInterval: 60000, // 1 minute
+  },
 
-```css
-/* Standard breakpoints */
-@media (max-width: 480px) {
-  /* Mobile */
+  analyticsQueue: {
+    maxEvents: 50, // Offline queue size
+    batchSize: 10, // Events per batch
+    flushInterval: 30000, // 30 seconds
+    priorityLevels: ["critical", "normal", "low"],
+  },
+};
+```
+
+## 6. User Experience Requirements (Rozszerzone Wersja 2)
+
+### 6.1 Loading States (Znacznie rozszerzone)
+
+```typescript
+interface LoadingStates {
+  // Existing states
+  login: "Logowanie...";
+  registration: "Tworzenie konta...";
+  passwordReset: "Wysyłanie emaila...";
+
+  // New states ⭐️ Wersja 2
+  promoCodeValidation: "Sprawdzanie kodu promocyjnego...";
+  promoCodeActivation: "Aktywowanie kodu promocyjnego...";
+  activationEmailResend: "Wysyłanie emaila aktywacyjnego...";
+  analyticsTracking: "Zapisywanie danych...";
+  rateLimit: "Sprawdzanie limitów...";
 }
-@media (min-width: 481px) and (max-width: 768px) {
-  /* Tablet */
-}
-@media (min-width: 769px) and (max-width: 1024px) {
-  /* Desktop */
-}
-@media (min-width: 1025px) {
-  /* Large Desktop */
+
+interface ProgressIndicators {
+  // Enhanced progress indicators
+  promoCodeFlow: {
+    steps: ["Wprowadzenie", "Walidacja", "Aktywacja", "Potwierdzenie"];
+    currentStep: number;
+    estimatedTime: number; // seconds
+  };
+
+  accountActivation: {
+    steps: ["Rejestracja", "Email wysłany", "Link kliknięty", "Konto aktywne"];
+    currentStep: number;
+    timeRemaining?: number; // for rate limits
+  };
 }
 ```
 
-### 8.2 Touch Interface Requirements
+### 6.2 Real-time Feedback (Nowe Wersja 2)
 
-- **Minimum touch target**: 44px x 44px
-- **Touch gestures**: Tap, swipe (dla modal dismiss)
-- **Keyboard support**: Virtual keyboard compatibility
-- **Zoom support**: Pinch-to-zoom allowed
+```javascript
+const realTimeFeedback = {
+  promoCodeValidation: {
+    debounceMs: 300, // Wait for user to stop typing
+    showSpinner: true,
+    showCheckmark: true,
+    showErrorIcon: true,
+    previewCredits: true, // Show bonus amount for valid codes
+  },
 
-### 8.3 Layout Specifications
+  rateLimitStatus: {
+    showCountdown: true,
+    showAttemptsRemaining: true,
+    showNextAllowedTime: true,
+    colorCoding: {
+      green: "available",
+      yellow: "warning",
+      red: "blocked",
+    },
+  },
 
-```css
-/* Form layout requirements */
-.form-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-}
+  networkStatus: {
+    showOfflineIndicator: true,
+    queueOfflineActions: true,
+    autoRetryOnReconnect: true,
+    preserveFormData: true,
+  },
+};
+```
 
-.form-field {
-  margin-bottom: 16px;
-  min-height: 44px; /* Touch friendly */
-}
+### 6.3 Error Recovery (Rozszerzone Wersja 2)
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+```typescript
+interface ErrorRecoveryStrategies {
+  // Enhanced error recovery
+  promoCodeErrors: {
+    invalidCode: {
+      action: "clear_field_and_focus";
+      suggestion: "Sprawdź kod i spróbuj ponownie";
+      allowRetry: true;
+    };
+    expiredCode: {
+      action: "clear_field";
+      suggestion: "Wprowadź aktualny kod promocyjny";
+      showAlternatives: true;
+    };
+    alreadyUsed: {
+      action: "clear_field";
+      suggestion: "Ten kod został już wykorzystany";
+      showHistory: true;
+    };
+    rateLimited: {
+      action: "disable_field_with_timer";
+      suggestion: "Zbyt wiele prób. Spróbuj za {countdown}";
+      showCountdown: true;
+    };
+  };
+
+  networkErrors: {
+    promoCodeValidation: {
+      strategy: "queue_for_retry";
+      maxRetries: 3;
+      showOfflineMode: true;
+    };
+    analyticsTracking: {
+      strategy: "queue_and_continue";
+      silent: true; // Don't interrupt user flow
+      batchRetry: true;
+    };
+  };
 }
 ```
 
----
+## 7. Analytics and Monitoring (Nowe sekcje Wersja 2)
 
-## 9. Accessibility (A11y) Technical Requirements
+### 7.1 Event Tracking Schema
 
-### 9.1 WCAG 2.1 Compliance
+```typescript
+interface AnalyticsEvents {
+  // Enhanced existing events
+  login_attempt: {
+    email: string; // hashed
+    has_promo_code: boolean; // ⭐️ NOWE
+    timestamp: number;
+  };
 
-- **Level**: AA compliance required
-- **Color contrast**: Minimum 4.5:1 ratio
-- **Focus indicators**: 2px solid outline
-- **Text scaling**: Support up to 200% zoom
+  registration_attempt: {
+    email: string; // hashed
+    has_promo_code: boolean; // ⭐️ NOWE
+    timestamp: number;
+  };
 
-### 9.2 ARIA Implementation
+  // New promo code events ⭐️
+  promo_code_entered: {
+    code_length: number; // Don't store actual code
+    context: "registration" | "login";
+    timestamp: number;
+  };
+
+  promo_code_validated: {
+    valid: boolean;
+    error_type?: string;
+    context: "registration" | "login";
+    response_time: number;
+    timestamp: number;
+  };
+
+  promo_code_activated: {
+    credits_added: number;
+    context: "registration" | "login";
+    user_type: "new" | "existing";
+    timestamp: number;
+  };
+
+  promo_code_error: {
+    error_type: "invalid" | "expired" | "used" | "rate_limited";
+    context: "registration" | "login";
+    recovery_action?: string;
+    timestamp: number;
+  };
+
+  // New account activation events ⭐️
+  account_activation_needed: {
+    email: string; // hashed
+    has_pending_promo: boolean;
+    timestamp: number;
+  };
+
+  activation_email_resent: {
+    email: string; // hashed
+    attempt_number: number;
+    success: boolean;
+    timestamp: number;
+  };
+
+  account_activated: {
+    email: string; // hashed
+    time_to_activation: number; // minutes from registration
+    promo_code_activated: boolean;
+    timestamp: number;
+  };
+}
+```
+
+### 7.2 Performance Monitoring
+
+```javascript
+const performanceMetrics = {
+  // Enhanced performance tracking
+  apiCalls: {
+    promoCodeValidation: {
+      responseTime: 'track 95th percentile',
+      errorRate: 'track by error type',
+      cacheHitRate: 'track effectiveness'
+    };
+    promoCodeActivation: {
+      responseTime: 'track 99th percentile',
+      successRate: 'track by user type',
+      retryRate: 'track retry patterns'
+    };
+  };
+
+  userExperience: {
+    promoCodeFlow: {
+      completionRate: 'track funnel conversion',
+      abandonmentPoints: 'identify drop-off stages',
+      errorRecoveryRate: 'track user resilience'
+    };
+
+    formInteraction: {
+      timeToFirstInteraction: 'measure engagement',
+      validationResponseTime: 'measure real-time feedback',
+      errorResolutionTime: 'measure user efficiency'
+    };
+  };
+
+  businessMetrics: {
+    promoCodeROI: {
+      acquisitionCost: 'track cost per activated user',
+      lifetimeValue: 'track promo user value',
+      retentionRate: 'compare promo vs non-promo users'
+    };
+  };
+};
+```
+
+### 7.3 Real-time Dashboard Metrics
+
+```javascript
+const dashboardMetrics = {
+  realTimeView: {
+    activeUsers: 'current online users',
+    promoActivationsPerMinute: 'live activation rate', // ⭐️ NOWE
+    errorRatePercentage: 'live error tracking',
+    averageResponseTime: 'live performance'
+  };
+
+  hourlyMetrics: {
+    registrationConversion: 'with vs without promo codes', // ⭐️ NOWE
+    loginSuccessRate: 'including promo code logins', // ⭐️ NOWE
+    accountActivationRate: 'email to active conversion', // ⭐️ NOWE
+    topPromoCodesByUsage: 'most popular codes' // ⭐️ NOWE
+  };
+
+  dailyTrends: {
+    userGrowth: 'new registrations vs activations',
+    promoCodeEffectiveness: 'conversion rates by code', // ⭐️ NOWE
+    errorPatterns: 'identify recurring issues',
+    performanceTrends: 'system health over time'
+  };
+};
+```
+
+## 8. Security Enhanced (Wersja 2)
+
+### 8.1 Promo Code Security ⭐️ NOWE
+
+```typescript
+interface PromoCodeSecurity {
+  validation: {
+    inputSanitization: "strict alphanumeric only";
+    lengthLimits: "min 6, max 12 characters";
+    blacklistCheck: "against common words/patterns";
+    rateLimit: "per IP and per user";
+  };
+
+  transmission: {
+    encryption: "TLS 1.3 required";
+    requestSigning: "HMAC-SHA256 signature";
+    timestamp: "prevent replay attacks";
+    nonceCheck: "prevent duplicate requests";
+  };
+
+  storage: {
+    clientSide: "NEVER store promo codes";
+    serverSide: "encrypted at rest";
+    logging: "hash codes in logs";
+    audit: "full activation trail";
+  };
+
+  bruteForceProtection: {
+    ipBasedLimiting: "10 verifications per 15 min";
+    userBasedLimiting: "5 activations per hour";
+    captchaIntegration: "after 5 failed attempts";
+    temporaryBlocking: "escalating time blocks";
+  };
+}
+```
+
+### 8.2 Enhanced Audit Logging ⭐️ NOWE
+
+```javascript
+const auditLogging = {
+  promoCodeActivities: {
+    verification: {
+      timestamp: 'ISO 8601',
+      hashedCode: 'SHA-256 hash',
+      userId: 'if available',
+      ipAddress: 'client IP',
+      userAgent: 'browser info',
+      result: 'valid|invalid|error',
+      responseTime: 'milliseconds'
+    };
+
+    activation: {
+      timestamp: 'ISO 8601',
+      hashedCode: 'SHA-256 hash',
+      userId: 'required',
+      creditsAdded: 'number',
+      previousCredits: 'number',
+      activationId: 'unique ID',
+      context: 'registration|login'
+    };
+
+    errors: {
+      timestamp: 'ISO 8601',
+      errorType: 'invalid|expired|used|rate_limited',
+      hashedCode: 'SHA-256 hash',
+      userId: 'if available',
+      ipAddress: 'client IP',
+      attemptCount: 'current attempt number'
+    };
+  };
+
+  securityEvents: {
+    rateLimitViolations: {
+      timestamp: 'ISO 8601',
+      ipAddress: 'client IP',
+      limitType: 'verification|activation|resend',
+      attemptCount: 'attempts made',
+      blockDuration: 'seconds blocked'
+    };
+
+    suspiciousActivity: {
+      multipleInvalidCodes: 'rapid invalid attempts',
+      unusualActivationPatterns: 'automation detection',
+      ipAddressAnomalies: 'suspicious IP behavior'
+    };
+  };
+};
+```
+
+## 9. Accessibility Enhanced (Wersja 2)
+
+### 9.1 WCAG 2.1 AA Compliance with Promo Codes ⭐️
+
+```typescript
+interface AccessibilityRequirements {
+  promoCodeComponents: {
+    ariaLabels: {
+      promoField: "Kod promocyjny (opcjonalnie)";
+      validationStatus: "Status walidacji kodu promocyjnego";
+      creditsPreview: "Podgląd dodatkowych kredytów";
+      errorMessage: "Błąd kodu promocyjnego";
+    };
+
+    liveRegions: {
+      validationFeedback: 'aria-live="polite"';
+      activationSuccess: 'aria-live="assertive"';
+      errorAnnouncements: 'aria-live="assertive"';
+      rateLimitWarnings: 'aria-live="polite"';
+    };
+
+    keyboardNavigation: {
+      tabOrder: "logical flow through promo fields";
+      shortcuts: "Alt+P to focus promo code field";
+      escapeKey: "clear promo field and errors";
+      enterKey: "trigger validation";
+    };
+  };
+
+  visualDesign: {
+    colorContrast: {
+      normalText: "4.5:1 minimum ratio";
+      largeText: "3:1 minimum ratio";
+      errorStates: "4.5:1 for error indicators";
+      successStates: "4.5:1 for success indicators";
+    };
+
+    focusIndicators: {
+      outlineWidth: "2px minimum";
+      outlineColor: "high contrast";
+      outlineStyle: "solid or double";
+      clearVisibility: "against all backgrounds";
+    };
+  };
+}
+```
+
+### 9.2 Screen Reader Support ⭐️
 
 ```html
-<!-- Form accessibility example -->
-<form role="form" aria-labelledby="login-heading">
-  <h2 id="login-heading">Logowanie do systemu</h2>
+<!-- Enhanced accessibility markup -->
+<div class="promo-code-section" role="region" aria-labelledby="promo-heading">
+  <h3 id="promo-heading">Kod promocyjny</h3>
 
-  <div class="form-field">
-    <label for="email" id="email-label">Email</label>
-    <input
-      id="email"
-      type="email"
-      aria-labelledby="email-label"
-      aria-describedby="email-error"
-      aria-invalid="false"
-      required
-    />
-    <div id="email-error" role="alert" aria-live="polite"></div>
+  <label for="promo-code" id="promo-label">
+    Kod promocyjny (opcjonalnie)
+  </label>
+
+  <input
+    id="promo-code"
+    type="text"
+    aria-labelledby="promo-label"
+    aria-describedby="promo-help promo-status promo-error"
+    aria-invalid="false"
+    aria-autocomplete="none"
+    maxlength="12"
+    pattern="[A-Z0-9]{6,12}"
+  />
+
+  <div id="promo-help" class="help-text">
+    Wprowadź kod promocyjny aby otrzymać dodatkowe kredyty
   </div>
-</form>
+
+  <div id="promo-status" aria-live="polite" class="status-message">
+    <!-- Dynamic validation status -->
+  </div>
+
+  <div
+    id="promo-error"
+    role="alert"
+    aria-live="assertive"
+    class="error-message"
+  >
+    <!-- Dynamic error messages -->
+  </div>
+
+  <div id="promo-credits" aria-live="polite" class="credits-preview">
+    <!-- Credits preview for valid codes -->
+  </div>
+</div>
 ```
 
-### 9.3 Keyboard Navigation
+## 10. Testing Requirements (Rozszerzone Wersja 2)
+
+### 10.1 Unit Testing Enhanced
+
+```typescript
+// Enhanced test coverage requirements
+const testCoverage = {
+  overall: '85%', // Increased from 80%
+  promoCodeLogic: '95%', // Critical business logic
+  errorHandling: '90%', // Enhanced error scenarios
+  accessibilityFeatures: '85%', // New accessibility tests
+  securityFunctions: '95%' // Security-critical code
+};
+
+// New test categories ⭐️
+const newTestSuites = {
+  promoCodeValidation: {
+    validCodeFormats: 'test all valid patterns',
+    invalidCodeFormats: 'test rejection of invalid patterns',
+    rateLimitBehavior: 'test rate limiting enforcement',
+    cacheEffectiveness: 'test validation caching',
+    errorRecovery: 'test error handling flows'
+  };
+
+  accountActivation: {
+    activationFlows: 'test complete activation process',
+    resendLimiting: 'test email resend rate limiting',
+    promoPreservation: 'test promo code preservation',
+    errorScenarios: 'test activation failure handling'
+  };
+
+  analyticsTracking: {
+    eventCapture: 'test all event types fired',
+    offlineQueueing: 'test offline event storage',
+    batchProcessing: 'test event batching',
+    privacyCompliance: 'test data anonymization'
+  };
+};
+```
+
+### 10.2 Integration Testing Enhanced
 
 ```javascript
-// Keyboard navigation requirements
-const keyboardSupport = {
-  TAB: "navigate_forward",
-  SHIFT_TAB: "navigate_backward",
-  ENTER: "submit_form",
-  ESCAPE: "close_modal",
-  SPACE: "activate_button",
-  ARROW_KEYS: "navigate_options",
+const integrationTests = {
+  // Enhanced existing tests
+  authFlow: 'login/registration with promo codes',
+  apiIntegration: 'all new endpoints tested',
+  errorHandling: 'network failures with promo data',
+
+  // New integration tests ⭐️
+  promoCodeFlow: {
+    registrationWithPromo: 'complete flow test',
+    loginWithPromo: 'activation during login',
+    errorRecovery: 'handling of promo failures',
+    rateLimitIntegration: 'limits across all endpoints'
+  };
+
+  accountActivationFlow: {
+    normalActivation: 'without promo code',
+    promoActivation: 'with pending promo code',
+    resendFlow: 'resend email functionality',
+    rateLimitFlow: 'resend rate limiting'
+  };
+
+  analyticsIntegration: {
+    eventFlow: 'event capture and transmission',
+    offlineSupport: 'offline event queueing',
+    dataAccuracy: 'correct data in analytics'
+  };
 };
 ```
 
----
-
-## 10. Monitoring and Logging
-
-### 10.1 Client-side Logging
+### 10.3 E2E Testing Enhanced
 
 ```javascript
-// Logging configuration
-const logConfig = {
-  level: "INFO", // DEBUG, INFO, WARN, ERROR
-  targets: ["console", "remote"],
-  remoteEndpoint: "https://logs.example.com/api/log",
-  includeUserAgent: true,
-  includeTimestamp: true,
-  includePage: true,
-};
+const e2eTestScenarios = {
+  // Enhanced existing scenarios
+  happyPath: 'complete user journey with promo codes',
+  errorRecovery: 'user recovery from all error states',
 
-// Log structure
-const logEntry = {
-  timestamp: "2025-06-15T10:30:00Z",
-  level: "INFO",
-  category: "AUTH",
-  event: "LOGIN_ATTEMPT",
-  userId: "hashed_user_id",
-  sessionId: "session_123",
-  data: {
-    success: true,
-    responseTime: 1250,
-    endpoint: "/webhook-test/c0c755cf...",
-  },
-};
-```
+  // New E2E scenarios ⭐️
+  promoCodeJourneys: {
+    newUserWithPromo: 'registration → activation → credits received',
+    existingUserWithPromo: 'login → promo activation → credits added',
+    invalidPromoRecovery: 'invalid code → correction → success',
+    rateLimitedUser: 'too many attempts → wait → retry success'
+  };
 
-### 10.2 Performance Monitoring
+  accountActivationJourneys: {
+    inactiveUserLogin: 'login attempt → activation prompt → email resend',
+    activationWithPromo: 'email click → account active → promo activated',
+    rateLimitedResend: 'multiple resends → rate limit → wait → success'
+  };
 
-```javascript
-// Core Web Vitals tracking
-const performanceMetrics = {
-  FCP: "First Contentful Paint",
-  LCP: "Largest Contentful Paint",
-  FID: "First Input Delay",
-  CLS: "Cumulative Layout Shift",
-  TTFB: "Time to First Byte",
-};
-
-// Custom metrics
-const customMetrics = {
-  authFlowDuration: "Time from form display to successful login",
-  formValidationTime: "Time for client-side validation",
-  apiResponseTime: "n8n webhook response time",
-  errorRecoveryTime: "Time to recover from network errors",
+  accessibilityJourneys: {
+    screenReaderFlow: 'complete flow with screen reader',
+    keyboardOnlyFlow: 'no mouse interaction required',
+    highContrastFlow: 'usable in high contrast mode'
+  };
 };
 ```
 
-### 10.3 Error Tracking
+## 11. Development and Build Requirements (Rozszerzone Wersja 2)
 
-```javascript
-// Error tracking configuration
-const errorTracking = {
-  captureUnhandledRejections: true,
-  captureUnhandledExceptions: true,
-  captureConsoleErrors: true,
-  captureNetworkErrors: true,
-  maxBreadcrumbs: 50,
-  beforeSend: (event) => {
-    // Remove sensitive data
-    if (event.request?.data?.password) {
-      event.request.data.password = "[REDACTED]";
-    }
-    return event;
-  },
-};
-```
-
----
-
-## 11. Security Headers and CSP
-
-### 11.1 Content Security Policy
-
-```
-Content-Security-Policy:
-  default-src 'self';
-  script-src 'self' 'unsafe-inline' https://n8n-aipulse.up.railway.app;
-  style-src 'self' 'unsafe-inline';
-  font-src 'self' data:;
-  img-src 'self' data: https:;
-  connect-src 'self' https://n8n-aipulse.up.railway.app https://api.analytics.com;
-  frame-ancestors 'none';
-```
-
-### 11.2 Security Headers
-
-```
-Strict-Transport-Security: max-age=31536000; includeSubDomains
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-X-XSS-Protection: 1; mode=block
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: geolocation=(), microphone=(), camera=()
-```
-
-### 11.3 CORS Configuration
-
-```javascript
-// Expected CORS headers from n8n
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "https://yourdomain.com",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  "Access-Control-Max-Age": "3600",
-};
-```
-
----
-
-## 12. Development and Build Requirements
-
-### 12.1 Build Configuration
+### 11.1 Build Configuration Enhanced
 
 ```json
 {
@@ -617,46 +978,143 @@ const corsHeaders = {
   },
   "optimization": {
     "bundleAnalyzer": true,
-    "compressionPlugin": "gzip",
+    "compressionPlugin": "gzip + brotli",
     "imageOptimization": true,
-    "cssMinification": true
+    "cssMinification": true,
+    "promoCodeChunking": true,
+    "analyticsAsyncLoading": true
+  },
+  "monitoring": {
+    "performanceTracking": true,
+    "errorTracking": "sentry",
+    "analyticsTracking": "google-analytics-4",
+    "customMetrics": "promo-code-effectiveness"
   }
 }
 ```
 
-### 12.2 Environment Variables
+### 11.2 Environment Variables Enhanced
 
 ```bash
-# Environment configuration
-NODE_ENV=production
-API_BASE_URL=https://n8n-aipulse.up.railway.app
-WEBHOOK_LOGIN=c0c755cf-deb8-4952-8f71-c88943566d72
-WEBHOOK_PASSWORD_RESET=014d8471-1c76-46c9-b15f-1009a131ce4f
-WEBHOOK_PASSWORD_ACTIVATE=5ca54e07-d8d5-45d6-bafe-642b209f234a
-WEBHOOK_REGISTER=cc9d3a99-22b4-4cf3-97ee-33af0405451d
-WEBHOOK_EMAIL_VERIFY=66086a0b-da58-4fa5-9132-242db2618345
-ANALYTICS_ID=GA_MEASUREMENT_ID
+# Existing environment variables...
+
+# New environment variables ⭐️ Wersja 2
+WEBHOOK_RESEND_ACTIVATION=resend-activation-email-id
+WEBHOOK_VERIFY_PROMO=verify-promo-code-id
+WEBHOOK_ACTIVATE_PROMO=activate-promo-code-id
+
+# Analytics configuration
+GA4_MEASUREMENT_ID=G-XXXXXXXXXX
+GA4_API_SECRET=api-secret-key
+ANALYTICS_DEBUG_MODE=false
+
+# Security configuration
+PROMO_CODE_SALT=secure-random-salt
+API_SIGNATURE_KEY=hmac-signing-key
+RATE_LIMIT_REDIS_URL=redis://localhost:6379
+
+# Feature flags
+FEATURE_PROMO_CODES=true
+FEATURE_ACCOUNT_ACTIVATION=true
+FEATURE_ENHANCED_ANALYTICS=true
+FEATURE_ACCESSIBILITY_ENHANCEMENTS=true
+
+# Monitoring
 SENTRY_DSN=https://sentry.io/dsn
+PERFORMANCE_MONITORING=true
+ERROR_TRACKING_LEVEL=info
 ```
 
-### 12.3 Testing Requirements
+### 11.3 Development Workflow Enhanced
 
 ```javascript
-// Test coverage requirements
-const testCoverage = {
-  statements: "90%",
-  branches: "85%",
-  functions: "90%",
-  lines: "90%",
-};
+const developmentWorkflow = {
+  // Enhanced existing workflow
 
-// Test types required
-const testTypes = {
-  unit: "Jest/Vitest - component logic",
-  integration: "API integration tests",
-  e2e: "Playwright/Cypress - user flows",
-  accessibility: "axe-core automated testing",
-  performance: "Lighthouse CI",
-  security: "OWASP ZAP scanning",
+  // New development practices ⭐️ Wersja 2
+  promoCodeDevelopment: {
+    mockingStrategy: 'comprehensive promo code API mocks',
+    testingApproach: 'test-driven development required',
+    securityReview: 'mandatory for all promo code features',
+    performanceMonitoring: 'continuous performance testing'
+  };
+
+  analyticsIntegration: {
+    testingStrategy: 'analytics sandbox environment',
+    dataValidation: 'automated event verification',
+    privacyCompliance: 'automated PII detection',
+    performanceImpact: 'bundle size monitoring'
+  };
+
+  accessibilityDevelopment: {
+    continuousA11yTesting: 'automated accessibility scanning',
+    screenReaderTesting: 'manual testing required',
+    keyboardTesting: 'automated keyboard navigation tests',
+    contrastValidation: 'automated color contrast checking'
+  };
 };
 ```
+
+---
+
+## 12. Deployment and Operations (Nowe Wersja 2)
+
+### 12.1 Production Configuration
+
+```javascript
+const productionConfig = {
+  promoCodeService: {
+    rateLimitingRedis: 'managed Redis instance',
+    cachingStrategy: 'multi-level caching',
+    monitoringAlerts: 'real-time error tracking',
+    backupStrategy: 'automated promo code backups'
+  };
+
+  analyticsService: {
+    dataRetention: '90 days maximum',
+    privacyCompliance: 'GDPR compliant',
+    performanceImpact: 'non-blocking tracking',
+    errorHandling: 'graceful degradation'
+  };
+
+  securityConfiguration: {
+    rateLimitingEngine: 'distributed rate limiting',
+    auditLogging: 'comprehensive security logs',
+    intrusionDetection: 'automated threat detection',
+    complianceReporting: 'automated compliance checks'
+  };
+};
+```
+
+### 12.2 Monitoring and Alerting
+
+```javascript
+const monitoringSetup = {
+  businessMetrics: {
+    promoCodeConversion: 'alert if < 80% normal rate',
+    accountActivationRate: 'alert if < 70% normal rate',
+    userRegistrationFlow: 'alert if > 5% error rate',
+    revenueImpact: 'alert for significant promo impact'
+  };
+
+  technicalMetrics: {
+    apiResponseTimes: 'alert if > 1 second average',
+    errorRates: 'alert if > 2% error rate',
+    rateLimitViolations: 'alert for unusual patterns',
+    securityEvents: 'immediate alert for threats'
+  };
+
+  userExperienceMetrics: {
+    promoCodeUXIssues: 'alert for high error rates',
+    accessibilityErrors: 'alert for a11y violations',
+    performanceDegradation: 'alert for slow loading',
+    conversionDrops: 'alert for funnel issues'
+  };
+};
+```
+
+---
+
+**Wersja dokumentu**: 2.0
+**Data aktualizacji**: Czerwiec 2025
+**Główne zmiany**: System kodów promocyjnych, rozszerzone bezpieczeństwo, analytics, accessibility, nowe API endpointy, monitoring
